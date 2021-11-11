@@ -1,0 +1,172 @@
+[gd_scene load_steps=24 format=2]
+
+[ext_resource path="res://assets/concrete texture.jpeg" type="Texture" id=1]
+[ext_resource path="res://Ball.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Main.gd" type="Script" id=3]
+[ext_resource path="res://Paddle2.gd" type="Script" id=4]
+[ext_resource path="res://Paddle.gd" type="Script" id=5]
+[ext_resource path="res://assets/paddle.png" type="Texture" id=6]
+[ext_resource path="res://LeftZone.gd" type="Script" id=7]
+[ext_resource path="res://RightZone.gd" type="Script" id=8]
+[ext_resource path="res://Restart_timer.tscn" type="PackedScene" id=9]
+[ext_resource path="res://assets/even_light_mask.png" type="Texture" id=10]
+[ext_resource path="res://resources/Scoreboard.tscn" type="PackedScene" id=11]
+[ext_resource path="res://assets/audio/laser1.ogg" type="AudioStream" id=12]
+[ext_resource path="res://assets/audio/tone1.ogg" type="AudioStream" id=13]
+[ext_resource path="res://Menu.tscn" type="PackedScene" id=14]
+
+[sub_resource type="CanvasItemMaterial" id=1]
+light_mode = 2
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 520, 10 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 520, 10 )
+
+[sub_resource type="CanvasItemMaterial" id=4]
+light_mode = 2
+
+[sub_resource type="CanvasItemMaterial" id=5]
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 5, 60 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 10, 400 )
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 10, 400 )
+
+[sub_resource type="CanvasItemMaterial" id=9]
+
+[node name="Main" type="Node" groups=[
+"main",
+]]
+script = ExtResource( 3 )
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Background"]
+material = SubResource( 1 )
+position = Vector2( 512, 300 )
+scale = Vector2( 2.05, 2.05 )
+texture = ExtResource( 1 )
+
+[node name="Light2D" type="Light2D" parent="Background/Sprite"]
+texture = ExtResource( 10 )
+
+[node name="Ball" parent="." instance=ExtResource( 2 )]
+
+[node name="Boundaries" type="Node2D" parent="."]
+
+[node name="TopBoundary" type="Area2D" parent="Boundaries" groups=[
+"boundaries",
+]]
+position = Vector2( 512, -5 )
+gravity = 0.0
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/TopBoundary"]
+shape = SubResource( 2 )
+
+[node name="BottomBoundary" type="Area2D" parent="Boundaries" groups=[
+"boundaries",
+]]
+position = Vector2( 512, 605 )
+gravity = 0.0
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/BottomBoundary"]
+shape = SubResource( 3 )
+
+[node name="Paddle" type="KinematicBody2D" parent="." groups=[
+"paddles",
+]]
+material = SubResource( 4 )
+position = Vector2( 50, 300 )
+scale = Vector2( 0.75, 0.75 )
+script = ExtResource( 5 )
+
+[node name="Sprite" type="Sprite" parent="Paddle"]
+material = SubResource( 5 )
+texture = ExtResource( 6 )
+
+[node name="Area2D" type="Area2D" parent="Paddle" groups=[
+"paddlecolliders",
+]]
+position = Vector2( 10, 0 )
+gravity_vec = Vector2( 0, 0 )
+gravity = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle/Area2D"]
+shape = SubResource( 6 )
+
+[node name="Paddle2" type="KinematicBody2D" parent="." groups=[
+"paddles",
+]]
+material = SubResource( 4 )
+position = Vector2( 950, 300 )
+scale = Vector2( 0.75, 0.75 )
+script = ExtResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="Paddle2"]
+material = SubResource( 5 )
+texture = ExtResource( 6 )
+
+[node name="Area2D" type="Area2D" parent="Paddle2" groups=[
+"paddlecolliders",
+]]
+position = Vector2( -10, 0 )
+gravity_vec = Vector2( 0, 0 )
+gravity = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle2/Area2D"]
+shape = SubResource( 6 )
+
+[node name="PointZones" type="Node" parent="."]
+
+[node name="LeftZone" type="Area2D" parent="PointZones" groups=[
+"left_zone",
+]]
+script = ExtResource( 7 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PointZones/LeftZone"]
+position = Vector2( -50, 300 )
+shape = SubResource( 7 )
+
+[node name="RightZone" type="Area2D" parent="PointZones" groups=[
+"right_zone",
+]]
+script = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PointZones/RightZone"]
+position = Vector2( 1075, 300 )
+shape = SubResource( 8 )
+
+[node name="Restart_timer" parent="." groups=[
+"restart_timer",
+] instance=ExtResource( 9 )]
+
+[node name="blink_sound" type="AudioStreamPlayer" parent="Restart_timer"]
+stream = ExtResource( 13 )
+
+[node name="Scoreboard" parent="." instance=ExtResource( 11 )]
+position = Vector2( 256, 0 )
+
+[node name="out_audio_player" type="AudioStreamPlayer" parent="." groups=[
+"out_audio",
+]]
+stream = ExtResource( 12 )
+
+[node name="Menu" parent="." instance=ExtResource( 14 )]
+pause_mode = 2
+light_mask = 0
+material = SubResource( 9 )
+position = Vector2( 260, 150 )
