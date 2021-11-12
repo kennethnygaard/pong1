@@ -11,7 +11,7 @@ func _ready():
 
 func start_timer(duration):
 	ball.is_paused = true
-	ball.enable_light(false)
+	#ball.enable_light(false)
 	start(duration)
 	blink_counter = 0
 	$Blink_timer.start(blink_duration)
@@ -21,7 +21,7 @@ func start_timer(duration):
 
 func on_timeout():
 	ball.is_paused = false
-	ball.enable_light(true)
+	#ball.enable_light(true)
 	ball.set_visible(true)
 	$Blink_timer.stop()
 

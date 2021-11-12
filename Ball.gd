@@ -40,11 +40,19 @@ func on_boundary_touched(area2d):
 	$sides_sound.play()
 
 func on_paddle_hit(paddle, paddle_y):
-	var diff = global_position.y - paddle_y
-	angle = move_vector.angle()
-	angle += diff/90
-	clamp_angle()
-	set_vector_from_angle(angle)
+	if(paddle==1):
+		var diff = global_position.y - paddle_y
+		angle = move_vector.angle()
+		angle += diff/90
+		clamp_angle(PI/4)
+		set_vector_from_angle(angle)
+	if(paddle==2):
+		var diff = global_position.y - paddle_y
+		angle = move_vector.angle()
+		angle -= diff/90
+		clamp_angle(PI/4)
+		set_vector_from_angle(angle)
+		
 
 func reset_position():
 	global_position = Vector2(500, 300)
@@ -57,29 +65,30 @@ func set_visible(is_visible):
 func enable_light(is_enabled):
 	$Sprite/Light2D.enabled = is_enabled
 
-func clamp_angle():
-	var max_angle = PI/4
-	angle = clamp(angle, -max_angle, max_angle)
-	move_vector = Vector2(cos(angle), sin(angle))
-	
-func clamp_start_angle():
+func clamp_angle(clamp_angle):
 	while(angle < 0):
 		angle += 2*PI
 	while(angle > 2*PI):
 		angle -= 2*PI
+		
+	var max_angle = clamp_angle
 	
-	var max_angle = PI/16
-
 	if(angle > PI/2 && angle < 3*PI/2):
-		angle = clamp(angle, PI-PI/16, PI+PI/16)
+		angle = clamp(angle, PI-max_angle, PI+max_angle)
 
 	if(angle < PI/2):
-		angle = clamp(angle, 0, PI/16)
+		angle = clamp(angle, 0, max_angle)
 
 	if(angle > 3*(PI/2)):
-		angle = clamp(angle, 2*PI-PI/16, 2*PI)
+		angle = clamp(angle, 2*PI-max_angle, 2*PI)
 
+	
+
+	#angle = clamp(angle, -max_angle, max_angle)
 	move_vector = Vector2(cos(angle), sin(angle))
+	
+func clamp_start_angle():
+	clamp_angle(PI/16)
 
 func set_vector_from_angle(vec_angle):
 		move_vector = Vector2(cos(vec_angle), sin(vec_angle))

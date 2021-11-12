@@ -175,7 +175,8 @@ margin_right = 460.0
 margin_bottom = 281.0
 
 [node name="Start_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer8"]
-margin_right = 150.0
+margin_left = 39.0
+margin_right = 189.0
 margin_bottom = 33.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_horizontal = 6
@@ -183,6 +184,7 @@ size_flags_vertical = 0
 text = "RESTART"
 
 [node name="Back_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer8"]
+visible = false
 margin_left = 154.0
 margin_right = 304.0
 margin_bottom = 33.0
@@ -191,8 +193,8 @@ size_flags_horizontal = 6
 text = "BACK"
 
 [node name="Quit_button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer8"]
-margin_left = 309.0
-margin_right = 459.0
+margin_left = 271.0
+margin_right = 421.0
 margin_bottom = 33.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_horizontal = 6

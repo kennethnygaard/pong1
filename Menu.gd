@@ -34,17 +34,15 @@ func _ready():
 	$Sprite.modulate.a = 0.1
 	P1_button.connect("pressed", self, "on_P1_button_pressed")
 	P2_button.connect("pressed", self, "on_P2_button_pressed")
-	SFX_button.connect("pressed", self, "on_SFX_button_pressed")
+	SFX_button.connect("pressed", self, "on_sfx_button_pressed")
 	CPU_level_button.connect("pressed", self, "on_cpu_level_button_pressed")
 	Speed_button.connect("pressed", self, "on_speed_button_pressed")
 	Restart_button.connect("pressed", self, "on_restart_button_pressed")
 	Back_button.connect("pressed", self, "on_back_button_pressed")
 	Quit_button.connect("pressed", self, "on_quit_button_pressed")
 	
-	Back_button.visible = false
 	Restart_button.text = "START"
 	
-	update_buttons()
 	main.set_pause(true)
 	
 func on_P1_button_pressed():
@@ -61,7 +59,7 @@ func on_P2_button_pressed():
 		p2_selected = 0
 	update_buttons()
 
-func on_SFX_button_pressed():
+func on_sfx_button_pressed():
 	$ClickPlayer.play()
 	main.set_audio(sfx_on)
 
@@ -90,9 +88,16 @@ func on_restart_button_pressed():
 	is_paused = false
 	main.set_pause(is_paused)
 	ball.ball_speed_level = speed
+	
+	paddles[0].set_cpu_level(cpu_level)
+	paddles[1].set_cpu_level(cpu_level)
+	
 	visible = false
+	ball.visible = true
+	
 	
 	paddles[0].set_controls(p1_selected)
+	paddles[1].set_controls(p2_selected)
 	
 	main.restart()
 
@@ -128,4 +133,6 @@ func reset_buttons():
 	Speed_label.text = str(speed)
 	p1_selected = paddles[0].P1_controls_number
 	P1_label.text = p_options[paddles[0].P1_controls_number]
+	cpu_level = paddles[0].cpu_move_level
+	CPU_level_label.text = str(cpu_level)
 

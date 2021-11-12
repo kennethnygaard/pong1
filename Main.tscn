@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://assets/concrete texture.jpeg" type="Texture" id=1]
 [ext_resource path="res://Ball.tscn" type="PackedScene" id=2]
@@ -9,11 +9,13 @@
 [ext_resource path="res://LeftZone.gd" type="Script" id=7]
 [ext_resource path="res://RightZone.gd" type="Script" id=8]
 [ext_resource path="res://Restart_timer.tscn" type="PackedScene" id=9]
-[ext_resource path="res://assets/even_light_mask.png" type="Texture" id=10]
+[ext_resource path="res://assets/even_light_mask2.png" type="Texture" id=10]
 [ext_resource path="res://resources/Scoreboard.tscn" type="PackedScene" id=11]
 [ext_resource path="res://assets/audio/laser1.ogg" type="AudioStream" id=12]
 [ext_resource path="res://assets/audio/tone1.ogg" type="AudioStream" id=13]
 [ext_resource path="res://Menu.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Win_menu.tscn" type="PackedScene" id=15]
+[ext_resource path="res://assets/paddle_light.png" type="Texture" id=16]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 light_mode = 2
@@ -61,6 +63,7 @@ texture = ExtResource( 1 )
 texture = ExtResource( 10 )
 
 [node name="Ball" parent="." instance=ExtResource( 2 )]
+visible = false
 
 [node name="Boundaries" type="Node2D" parent="."]
 
@@ -98,6 +101,9 @@ script = ExtResource( 5 )
 material = SubResource( 5 )
 texture = ExtResource( 6 )
 
+[node name="Light2D" type="Light2D" parent="Paddle/Sprite"]
+texture = ExtResource( 16 )
+
 [node name="Area2D" type="Area2D" parent="Paddle" groups=[
 "paddlecolliders",
 ]]
@@ -119,6 +125,9 @@ script = ExtResource( 4 )
 [node name="Sprite" type="Sprite" parent="Paddle2"]
 material = SubResource( 5 )
 texture = ExtResource( 6 )
+
+[node name="Light2D" type="Light2D" parent="Paddle2/Sprite"]
+texture = ExtResource( 16 )
 
 [node name="Area2D" type="Area2D" parent="Paddle2" groups=[
 "paddlecolliders",
@@ -163,6 +172,7 @@ position = Vector2( 256, 0 )
 [node name="out_audio_player" type="AudioStreamPlayer" parent="." groups=[
 "out_audio",
 ]]
+pause_mode = 2
 stream = ExtResource( 12 )
 
 [node name="Menu" parent="." instance=ExtResource( 14 )]
@@ -170,3 +180,6 @@ pause_mode = 2
 light_mask = 0
 material = SubResource( 9 )
 position = Vector2( 260, 150 )
+
+[node name="Win_menu" parent="." instance=ExtResource( 15 )]
+visible = false
